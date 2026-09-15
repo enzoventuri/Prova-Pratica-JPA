@@ -8,6 +8,10 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Define a Entidade de Leitura Térmica, possui relacionamento com Transforamdor (N:1) e com Alerta Termico (1:1),
+ * dependendo da temperatura do Óleo ou Enrolamento, pode ser necessário instanciar uma novo Alerta Termico
+ */
 @Entity
 @Table(name = "leitura_termica")
 @AllArgsConstructor
@@ -22,16 +26,12 @@ public class LeituraTermica {
 
     @Column(
             name = "temp_oleo",
-            precision = 5,
-            secondPrecision = 2,
             nullable = false
     )
     private BigDecimal temperaturaOleo;
 
     @Column(
             name = "temp_enrolamento",
-            precision = 5,
-            secondPrecision = 2,
             nullable = false
     )
     private BigDecimal temperaturaEnrolamento;

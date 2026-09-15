@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Define a Entidade de Transformador, possui relacionamento com Técnico (N:M), Alerta Térmico (1:N) e Leitura Térmica (1:N),
+ * é proibido criar um Transformador que possui duplicidade de Número de Série de outro Transformador.
+ */
 @Entity
 @Table(name = "transformador")
 @AllArgsConstructor
@@ -63,21 +67,28 @@ public class Transformador {
     )
     private BigDecimal limiteTemperaturaOleo;
 
-    @ElementCollection
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "transformador_tecnico",
+            joinColumns = @JoinColumn(name = "transformador_id"),
+            inverseJoinColumns = @JoinColumn(name = "tecnico_id")
+    )
     private Set<Tecnico> tecnicos = new HashSet<>();
 
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "transformador",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    Set<LeituraTermica> leituras = new HashSet<>();
+    private Set<LeituraTermica> leituras = new HashSet<>();
 
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy = "transformador",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    Set<AlertaTermico> alertas = new HashSet<>();
+    private Set<AlertaTermico> alertas = new HashSet<>();
 
 }

@@ -6,6 +6,10 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Define a Entidade dos Técnicos, possui relacionamento com Transformador (N:M),
+ * é proibido cadastrar um Técnico com o mesmo CPF que outro.
+ */
 @Entity
 @Table(name = "tecnico")
 @AllArgsConstructor
@@ -27,6 +31,7 @@ public class Tecnico {
 
     @Column(
             name = "cpf",
+            length = 20,
             unique = true,
             nullable = false
     )
@@ -34,17 +39,19 @@ public class Tecnico {
 
     @Column(
             name = "especialidade",
+            length = 50,
             nullable = false
     )
     private String especialidade;
 
     @Column(
             name = "email",
+            length = 50,
             nullable = false
     )
     private String email;
 
-    @ManyToMany(mappedBy = "tecnicos")
-    Set<Transformador> transformadores = new HashSet<>();
+    @ManyToMany(mappedBy = "tecnicos", fetch = FetchType.LAZY)
+    private Set<Transformador> transformadores = new HashSet<>();
 
 }

@@ -3,9 +3,11 @@ package br.com.ctw.api_monitoramento_transformadores.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
+/**
+ * Define a Entidade de Alerta Termico, possui relacionamento com Transformador (N:1) e com Leitura Termica (1:N)
+ */
 @Entity
 @Table(name = "alerta_termico")
 @AllArgsConstructor
@@ -32,7 +34,8 @@ public class AlertaTermico {
     private String tipo;
 
     @Column(
-            name = "descricao"
+            name = "descricao",
+            nullable = false
     )
     private String descricao;
 
